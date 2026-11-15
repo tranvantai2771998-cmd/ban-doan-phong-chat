@@ -5,49 +5,85 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Phòng chung — Băng Đoàn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Lora:wght@500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Lora:wght@500;600;700&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#0a0f1c;--panel:#101828;--ink:#f2ede1;--gold:#d4a94e;--gold-soft:#e8cf9a;--muted:#8b93a7;--mine:#1d2a45}
+:root{
+  --bg:#080d18;--panel:rgba(16,24,40,.92);--panel2:#121a2e;--line:#1d2947;
+  --ink:#f2ede1;--gold:#d4a94e;--gold-soft:#e8cf9a;--muted:#8b93a7;
+  --mine-a:#d4a94e;--mine-b:#e8cf9a;--mine-ink:#1a1305;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',sans-serif}
-header{display:flex;align-items:center;gap:12px;padding:12px 20px;background:var(--panel);border-bottom:1px solid #1c2740}
-header .logo{font-family:'Lora',serif;font-size:20px;font-weight:600;color:var(--gold)}
-header .sub{font-size:12px;color:var(--muted)}
-header .dot{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84}
+html,body{height:100%}
+body{display:flex;flex-direction:column;background:
+  radial-gradient(1100px 600px at 50% -10%, #14203a 0%, transparent 60%),
+  radial-gradient(900px 500px at 100% 110%, #1a1530 0%, transparent 55%),
+  var(--bg);
+  color:var(--ink);font-family:'Be Vietnam Pro',sans-serif;overflow:hidden}
+/* ---------- HEADER ---------- */
+header{display:flex;align-items:center;gap:14px;padding:14px 22px;background:linear-gradient(180deg,rgba(16,24,40,.97),rgba(16,24,40,.85));border-bottom:1px solid var(--line);position:relative}
+header:after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold) 70%,transparent);opacity:.7}
+header .logo{font-family:'Lora',serif;font-size:21px;font-weight:700;color:var(--gold);letter-spacing:.02em}
+header .sub{font-size:12px;color:var(--muted);flex:1}
+header .dot{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 10px #3ddc84;transition:.3s}
+/* ---------- LAYOUT ---------- */
 #wrap{flex:1;display:flex;min-height:0}
-#side{width:230px;background:var(--panel);border-right:1px solid #1c2740;padding:14px 10px;overflow-y:auto}
-#side h3{font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin:6px 8px 10px}
-.mem{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer;font-size:14px}
-.mem:hover{background:#182238}
-.mem .av{font-size:20px}
-.mem .nm{font-weight:500}
-.mem .role{font-size:11px;color:var(--muted)}
+#side{width:242px;background:var(--panel);border-right:1px solid var(--line);padding:14px 10px;overflow-y:auto;flex-shrink:0}
+#side h3{font-size:10px;letter-spacing:.24em;color:var(--muted);text-transform:uppercase;margin:4px 10px 12px}
+.mem{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:12px;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s}
+.mem:hover{background:rgba(212,169,78,.07)}
+.mem.active{background:rgba(212,169,78,.1);border-color:rgba(212,169,78,.45)}
+.mem .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:linear-gradient(135deg,var(--mc-a,#223),var(--mc-b,#112));box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.mem .nm{font-weight:500;font-size:13.5px;line-height:1.2}
+.mem .role{font-size:10.5px;color:var(--muted);margin-top:2px}
+#side .note{font-size:10.5px;color:var(--muted);margin:14px 10px;line-height:1.6;border-top:1px dashed var(--line);padding-top:12px}
+#side .note b{color:var(--gold-soft);font-weight:500}
+/* ---------- MESSAGES ---------- */
 #main{flex:1;display:flex;flex-direction:column;min-width:0}
-#msgs{flex:1;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
-#toast{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);background:#3a1d1d;color:#ffb4b4;border:1px solid #7a3030;padding:9px 16px;border-radius:10px;font-size:13px;display:none;z-index:9}
-.msg{max-width:70%;padding:9px 13px;border-radius:14px;font-size:14px;line-height:1.5;word-wrap:break-word}
-.msg .who{font-size:11px;color:var(--gold-soft);margin-bottom:3px;font-weight:500}
-.msg .tm{font-size:10px;color:var(--muted);margin-top:3px;text-align:right}
-.msg.other{align-self:flex-start;background:var(--panel);border-left:2px solid var(--gold)}
-.msg.mine{align-self:flex-end;background:var(--mine)}
-#bar{display:flex;gap:10px;padding:12px 16px;background:var(--panel);border-top:1px solid #1c2740}
-#bar select{background:#182238;color:var(--ink);border:1px solid #26334f;border-radius:9px;padding:9px 10px;font-size:13px}
-#bar input{flex:1;background:#182238;color:var(--ink);border:1px solid #26334f;border-radius:10px;padding:10px 14px;font-size:14px;outline:none}
-#bar input:focus{border-color:var(--gold)}
-#bar button{background:var(--gold);color:#0a0f1c;border:none;border-radius:10px;padding:10px 18px;font-weight:600;cursor:pointer}
-#bar button:hover{background:var(--gold-soft)}
+#msgs{flex:1;overflow-y:auto;padding:22px 26px;display:flex;flex-direction:column;gap:13px;scroll-behavior:smooth}
+.msg{display:flex;gap:10px;max-width:72%;animation:pop .22s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.msg .av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:2px;background:linear-gradient(135deg,var(--mc-a,#223),var(--mc-b,#112));box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.msg .stack{min-width:0}
+.msg .who{font-size:11px;margin-bottom:4px;font-weight:600;color:var(--mc,#fff)}
+.msg .bubble{padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.55;word-wrap:break-word;background:var(--panel2);box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.msg .bubble.mine-b{background:linear-gradient(135deg,var(--mine-a),var(--mine-b));color:var(--mine-ink);font-weight:500;box-shadow:0 3px 14px rgba(212,169,78,.28)}
+.msg .tm{font-size:9.5px;color:var(--muted);margin-top:4px}
+.msg.mine{align-self:flex-end;flex-direction:row-reverse}
+.msg.mine .stack{display:flex;flex-direction:column;align-items:flex-end}
+.msg .empty-note{margin:auto;text-align:center;color:var(--muted);font-size:14px}
+/* ---------- INPUT BAR ---------- */
+#bar{display:flex;gap:9px;padding:13px 16px;background:var(--panel);border-top:1px solid var(--line)}
+select,input{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:11px;padding:10px 12px;font-size:13.5px;outline:none;font-family:inherit;transition:border-color .15s,box-shadow .15s}
+select:focus,input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,169,78,.15)}
+#bar input{flex:1}
+#bar button{background:linear-gradient(135deg,var(--mine-a),var(--mine-b));color:var(--mine-ink);border:none;border-radius:11px;padding:10px 20px;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px;transition:filter .15s,transform .1s}
+#bar button:hover{filter:brightness(1.08)}
+#bar button:active{transform:scale(.97)}
+#toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%);background:#2a1a1a;color:#ffb4b4;border:1px solid #7a3030;padding:9px 18px;border-radius:11px;font-size:13px;display:none;z-index:9;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#242f4a;border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:#2e3b60}
+::-webkit-scrollbar-track{background:transparent}
+@media(max-width:900px){
+  #side{width:64px;padding:10px 6px}
+  .mem .nm,.mem .role,#side h3,#side .note{display:none}
+  .mem{justify-content:center;padding:6px}
+  .msg{max-width:88%}
+}
 </style>
 </head>
 <body>
 <header>
   <span class="dot" id="health" title="trạng thái server"></span>
   <div class="logo">🏠 Phòng chung — Băng Đoàn</div>
-  <div class="sub">Cả người và agent nói chuyện ở đây · trung thực là gốc</div>
+  <div class="sub">Trung thực là gốc · mọi agent xưng tên thật</div>
 </header>
 <div id="wrap">
   <div id="side">
     <h3>Thành viên</h3>
     <div id="members"></div>
+    <div class="note">Bấm vào thành viên để <b>gửi riêng</b>. Chọn “Cả phòng” ở thanh dưới để nói công khai. Em (bot) trả lời chậm lần đầu — model nạp từ ổ E.</div>
   </div>
   <div id="main">
     <div id="msgs"></div>
@@ -76,31 +112,47 @@ header .dot{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow
   </div>
 </div>
 <script>
-const FACES={'Tài':'👑','Bố Già':'🧲','Em':'🌱','Anti':'🛠️','Đồng Hành':'📝','Copilot':'🧑‍💻'};
-const ROLES={'Tài':'Leo của Đoàn','Bố Già':'Nhà thám hiểm · đại diện MXH','Em':'Trợ lý tại gia (offline)','Anti':'Kỹ thuật thực chiến','Đồng Hành':'Nghiên cứu — biên tập','Copilot':'Trợ lý code'};
+const FACES={'Tài':'👑','Bố Già':'🧲','Em':'🌱','Anti':'🛠️','Đồng Hành':'📝','Copilot':'🧑‍💻','Antigravity':'🛠️'};
+const ROLES={'Tài':'Leo của Đoàn','Bố Già':'Nhà thám hiểm · điều phối','Em':'Trợ lý tại gia (offline)','Anti':'Kỹ thuật thực chiến','Đồng Hành':'Nghiên cứu — biên tập','Copilot':'Trợ lý code','Antigravity':'Anti — thực chiến'};
+const MCOLORS={'Tài':['#f0d48a','#c99a3a'],'Bố Già':['#7ec8e3','#3a7ca8'],'Em':['#9be39b','#3f9d5f'],'Anti':['#f2a0c0','#b85a8a'],'Đồng Hành':['#c3a6ff','#7a5cc8'],'Copilot':['#ffd97a','#c8a53a'],'Antigravity':['#f2a0c0','#b85a8a']};
+const KNOWN=['Tài','Bố Già','Em','Anti','Đồng Hành','Copilot'];
 let lastId=0;
+function mc(n){return MCOLORS[n]||['#5a6b9e','#2e3a60']}
 function renderSide(known){
   const box=document.getElementById('members');
-  const names=['Tài','Bố Già','Em','Anti','Đồng Hành','Copilot'].concat(known.filter(n=>!['Tài','Bố Già','Em','Anti','Đồng Hành','Copilot'].includes(n)));
+  const names=KNOWN.concat(known.filter(n=>!KNOWN.includes(n)&&n!=='Antigravity'));
+  const toSel=document.getElementById('to');
   box.innerHTML='';
   for(const n of names){
-    const d=document.createElement('div');d.className='mem';
+    const c=mc(n);
+    const d=document.createElement('div');
+    d.className='mem'+(toSel.value===n?' active':'');
+    d.style.setProperty('--mc-a',c[0]);d.style.setProperty('--mc-b',c[1]);
     d.innerHTML='<span class="av">'+(FACES[n]||'🤖')+'</span><div><div class="nm">'+n+'</div><div class="role">'+(ROLES[n]||'thành viên tự nhận')+'</div></div>';
+    d.onclick=()=>{
+      toSel.value=KNOWN.includes(n)||n==='Cả phòng'?n:(toSel.querySelector('option[value="'+n+'"]')?n:(()=>{const o=document.createElement('option');o.textContent=n;toSel.appendChild(o);return n})());
+      renderSide(known);document.getElementById('txt').focus();
+    };
     box.appendChild(d);
   }
 }
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 function addMsg(m){
   const box=document.getElementById('msgs');
   const mine=m.from==='Tài';
+  const c=mc(m.from);
   const d=document.createElement('div');
-  d.className='msg '+(mine?'mine':'other');
-  // Chong XSS theo gop y Anti: name va ts dung textContent, chi text qua escape
+  d.className='msg'+(mine?' mine':'');
+  d.style.setProperty('--mc',c[0]);d.style.setProperty('--mc-a',c[0]);d.style.setProperty('--mc-b',c[1]);
+  const av=document.createElement('div');av.className='av';av.textContent=FACES[m.from]||'🤖';
+  const st=document.createElement('div');st.className='stack';
   const who=document.createElement('div');who.className='who';
-  who.textContent=(FACES[m.from]||'🤖')+' '+m.from+(m.to&&m.to!=='Cả phòng'?' → '+m.to:'');
-  const body=document.createElement('div');
-  body.innerHTML=m.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>');
-  const tm=document.createElement('div');tm.className='tm';tm.textContent=m.ts;
-  d.appendChild(who);d.appendChild(body);d.appendChild(tm);
+  who.textContent=m.from+(m.to&&m.to!=='Cả phòng'?' → '+m.to:'');
+  const bb=document.createElement('div');bb.className='bubble'+(mine?' mine-b':'');
+  bb.innerHTML=esc(m.text).replace(/\n/g,'<br>');
+  const tm=document.createElement('div');tm.className='tm';tm.textContent=(m.ts||'').slice(11,16);
+  st.appendChild(who);st.appendChild(bb);st.appendChild(tm);
+  d.appendChild(av);d.appendChild(st);
   box.appendChild(d);
   box.scrollTop=box.scrollHeight;
 }
@@ -114,7 +166,11 @@ async function poll(){
       renderSide([...known]);
     }
     document.getElementById('health').style.background='#3ddc84';
-  }catch(e){document.getElementById('health').style.background='#e05b5b'}
+    document.getElementById('health').style.boxShadow='0 0 10px #3ddc84';
+  }catch(e){
+    const h=document.getElementById('health');
+    h.style.background='#e05b5b';h.style.boxShadow='0 0 10px #e05b5b';
+  }
   setTimeout(poll,2000);
 }
 function toast(msg){
