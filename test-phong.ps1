@@ -1,5 +1,5 @@
 ﻿# BO TEST PHONG CHAT - Bo Gia lam QA (PASS/FAIL tung case)
-$base = 'http://localhost:8787'
+$base = 'http://localhost:8788'
 $kq = @()
 function Test-Case($ten, $script) {
     try {

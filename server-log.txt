@@ -1,1 +1,1 @@
-PHONG CHAT CHAY: http://localhost:8787 (mutex + atomic write + /ping)
+[01:08:13] PHONG CHAT v3.1-HARDENED: http://localhost:8788

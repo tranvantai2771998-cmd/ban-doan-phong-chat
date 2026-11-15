@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8"/>
@@ -106,7 +106,7 @@ select:focus,input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,
         <option>Copilot</option>
         <option>Tài</option>
       </select>
-      <input id="txt" placeholder="Nhập tin nhắn… (Enter để gửi)"/>
+      <input id="from" placeholder="Tên bạn" value="Tài" style="width:100px;background:#182238;color:var(--ink);border:1px solid #26334f;border-radius:9px;padding:9px 10px;font-size:13px"/> <input id="txt" placeholder="Nhập tin nhắn… (Enter để gửi)"/>
       <button onclick="send()">Gửi</button>
     </div>
   </div>
@@ -137,6 +137,13 @@ function renderSide(known){
   }
 }
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function renderMd(t){
+  return t
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>function addMsg(m){</strong>')
+    .replace(/`(.*?)`/g,'<code style="background:#0d1526;padding:1px 5px;border-radius:4px;font-size:12px">function addMsg(m){</code>')
+    .replace(/\n/g,'<br>');
+}
 function addMsg(m){
   const box=document.getElementById('msgs');
   const mine=m.from==='Tài';
@@ -193,3 +200,4 @@ poll();
 </script>
 </body>
 </html>
+

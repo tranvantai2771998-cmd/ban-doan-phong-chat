@@ -1,8 +1,8 @@
-﻿# 🌉 CẦU NỐI ĐỒNG BỘ TELEGRAM <-> PHÒNG CHAT LOCALHOST:8787
-# Chạy nền tự động: Bất kỳ tin nào anh Tài nhắn qua Telegram sẽ bắn thẳng vào localhost:8787 và ngược lại!
+﻿# 🌉 CẦU NỐI ĐỒNG BỘ TELEGRAM <-> PHÒNG CHAT LOCALHOST:8788
+# Chạy nền tự động: Bất kỳ tin nào anh Tài nhắn qua Telegram sẽ bắn thẳng vào localhost:8788 và ngược lại!
 $ErrorActionPreference = 'SilentlyContinue'
 $token = "9226708889:AAGF_XwTNAZqJpwctOpG8Z1jONlg9bqTVvE"
-$roomBase = "http://localhost:8787"
+$roomBase = "http://localhost:8788"
 $chatFile = "E:\Nha-Em\phong-chat\tin-nhan.json"
 $offset = 0
 $lastRoomId = 0
@@ -28,7 +28,7 @@ while ($true) {
                     $senderName = $msg.from.first_name
                     if (-not $senderName) { $senderName = "Anh Tài (Telegram)" } else { $senderName = "$senderName (Telegram)" }
                     
-                    # Gửi vào phòng chat localhost:8787
+                    # Gửi vào phòng chat localhost:8788
                     $bodyObj = @{
                         from = $senderName
                         to   = "Cả phòng"

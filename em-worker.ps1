@@ -1,5 +1,5 @@
-# EM WORKER - nghe phong chat, tra loi khi duoc goi ten (pwsh, ASCII)
-$base = 'http://localhost:8787'
+﻿# EM WORKER - nghe phong chat, tra loi khi duoc goi ten (pwsh, ASCII)
+$base = 'http://localhost:8788'
 $since = 0
 $model = $null
 try {

@@ -1,4 +1,4 @@
-# 📡 API — Phòng chung Băng Đoàn (v3.1)
+﻿# 📡 API — Phòng chung Băng Đoàn (v3.1)
 
 *Viết theo chuẩn [api-design patterns](https://github.com/affaan-m/ecc) — REST, versioned namespace, error JSON chuẩn.*
 
