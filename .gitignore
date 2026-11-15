@@ -1,0 +1,7 @@
+# Du lieu phong chat KHONG vao repo (rieng tu cua thanh vien)
+tin-nhan.json
+tin-nhan-luu.json
+tin-nhan*.json
+*.tmp
+*.log
+renders/
