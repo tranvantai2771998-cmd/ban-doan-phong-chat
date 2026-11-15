@@ -16,6 +16,7 @@ function Send-Resp($res, $code, $type, $bytes) {
     $res.StatusCode = $code
     $res.ContentType = $type
     # CORS bo * theo gop y Anti: app noi bo, client cung localhost (same-origin, worker khong can CORS)
+    $res.Headers.Add('X-Room-Version', '3.1')
     $res.OutputStream.Write($bytes, 0, $bytes.Length)
 }
 
@@ -26,6 +27,9 @@ while ($listener.IsListening) {
         $res = $ctx.Response
         $path = $req.Url.AbsolutePath
         $m = $req.HttpMethod
+        # api-design: namespace versioned /api/v1/* = alias cua endpoints goc (khong breaking change)
+        # Substring(7): giu lai dau "/" — Substring(8) mat "/" de "ping" khong khop "/ping" (mau vat off-by-one)
+        if ($path -like '/api/v1/*') { $path = $path.Substring(7) }
 
         if ($path -eq '/' -or $path -eq '/index.html') {
             Send-Resp $res 200 'text/html; charset=utf-8' ([IO.File]::ReadAllBytes((Join-Path $www 'index.html')))
@@ -99,7 +103,8 @@ while ($listener.IsListening) {
             Send-Resp $res 200 'application/json; charset=utf-8' ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -InputObject $mem -Depth 5 -Compress)))
         }
         else {
-            Send-Resp $res 404 'text/plain' ([Text.Encoding]::UTF8.GetBytes('404'))
+            # api-design: 404 tra JSON chuan thay text trần
+            Send-Resp $res 404 'application/json; charset=utf-8' ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -InputObject @{ error = 'not found'; path = $path } -Compress)))
         }
     }
     catch {
